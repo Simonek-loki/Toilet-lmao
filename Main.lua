@@ -162,20 +162,28 @@ local musicIds = {
 	4159840042;
 	6456889294;
 }
+	
+local currentMusic = nil
+	
+local randomId = musicIds[math.random(1,#musicIds)]
 
 local sound = Instance.new("Sound")
 sound.Parent = char.HumanoidRootPart
-sound.SoundId = "rbxassetid://" .. tostring(musicIds[math.random(1,#musicIds)])
+sound.SoundId = "rbxassetid://" .. tostring(randomId)
 sound:Play()
 sound.Volume = 0.8
+	
+currentMusic = randomId
 
 local boom = Instance.new("Sound")
 boom.Parent = char.HumanoidRootPart
 boom.SoundId = "rbxassetid://7147226095"
 
 sound.Ended:Connect(function()
+	local ranId = musicIds[math.random(1,#musicIds)]
 	boom:Play()
-	sound.SoundId = "rbxassetid://" .. musicIds[math.random(1,#musicIds)]
+	sound.SoundId = "rbxassetid://" .. tostring(ranId)
+	currentMusic = ranId
 	sound:Play()
 end)
 
@@ -275,8 +283,10 @@ coroutine.resume(coroutine.create(function()
 		sound.Volume = math.clamp(sound.PlaybackLoudness / 35, 0.3, 1)
 		hum.Health = hum.MaxHealth
 		hum.Name = game:GetService("HttpService"):GenerateGUID(false)
-		local songData = ms:GetProductInfo(tonumber(string.sub(sound.SoundId, 13, #sound.SoundId)))
+		if currentMusic ~= nil then
+		local songData = ms:GetProductInfo(currentMusic)
 		TextLabel1.Text = "Playing right now : " .. songData.Name
 		TextLabel2.Text = "Author : " .. songData.Creator.Name
+		end
 	end
 end))
