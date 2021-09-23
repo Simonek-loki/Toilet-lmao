@@ -203,14 +203,14 @@ TorsoWeld.C0 = char.HumanoidRootPart["RootJoint"].C0
 TorsoWeld.C1 = char.HumanoidRootPart["RootJoint"].C1
 
 TorsoWeld.C0 = char.HumanoidRootPart["RootJoint"].C0 * CFrame.new(0, 0.8, 0.4)
-RightLegWeld.C0 = char.Torso["Right Hip"].C0 * CFrame.Angles(0, 0, math.rad(90.012))
-LeftLegWeld.C0 = char.Torso["Left Hip"].C0 * CFrame.Angles(0, 0, math.rad(-90.012))
+RightLegWeld.C0 = char.Torso["Right Hip"].C0 * CFrame.Angles(0, 0, math.rad(90))
+LeftLegWeld.C0 = char.Torso["Left Hip"].C0 * CFrame.Angles(0, 0, math.rad(-90))
 
 Toilet = Instance.new("Part")
 SpecialMesh1 = Instance.new("SpecialMesh")
 Toilet.Name = "Toilet"
 Toilet.Parent = char
-Toilet.CFrame = char.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(char.HumanoidRootPart.Orientation.Y - 90), 0) - Vector3.new(0,1.5,0)
+Toilet.CFrame = char.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(90), 0) - Vector3.new(0,1.5,0)
 Toilet.Size = Vector3.new(3.2580299377441, 3.451761007309, 2.1790940761566)
 Toilet.BottomSurface = Enum.SurfaceType.Smooth
 Toilet.CanCollide = false
