@@ -275,10 +275,8 @@ coroutine.resume(coroutine.create(function()
 		sound.Volume = math.clamp(sound.PlaybackLoudness / 35, 0.3, 1)
 		hum.Health = hum.MaxHealth
 		hum.Name = game:GetService("HttpService"):GenerateGUID(false)
-		local songData = ms:GetProductInfo(tonumber(string.sub(sound.SoundId, 14, #sound.SoundId)))
-		if #songData > 0 then
-			TextLabel1.Text = "Playing right now : " .. songData.Name
-			TextLabel2.Text = "Author : " .. songData.Creator.Name
-		end
+		local songData = ms:GetProductInfo(tonumber(string.sub(sound.SoundId, 13, #sound.SoundId)))
+		TextLabel1.Text = "Playing right now : " .. songData.Name
+		TextLabel2.Text = "Author : " .. songData.Creator.Name
 	end
 end))
