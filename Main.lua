@@ -153,6 +153,7 @@ end
 local char = owner.Character or owner.CharacterAdded:Wait()
 local mouse = owner:GetMouse()
 local hum = char:FindFirstChildWhichIsA("Humanoid")
+local ms = game:GetService("MarketplaceService")
 hum.MaxHealth = math.huge
 
 local musicIds = {
@@ -203,14 +204,14 @@ TorsoWeld.C0 = char.HumanoidRootPart["RootJoint"].C0
 TorsoWeld.C1 = char.HumanoidRootPart["RootJoint"].C1
 
 TorsoWeld.C0 = char.HumanoidRootPart["RootJoint"].C0 * CFrame.new(0, 0.8, 0.4)
-RightLegWeld.C0 = char.Torso["Right Hip"].C0 * CFrame.Angles(0, 0, math.rad(90))
-LeftLegWeld.C0 = char.Torso["Left Hip"].C0 * CFrame.Angles(0, 0, math.rad(-90))
+RightLegWeld.C0 = char.Torso["Right Hip"].C0 * CFrame.Angles(0, 0, math.rad(90.012))
+LeftLegWeld.C0 = char.Torso["Left Hip"].C0 * CFrame.Angles(0, 0, math.rad(-90.012))
 
 Toilet = Instance.new("Part")
 SpecialMesh1 = Instance.new("SpecialMesh")
 Toilet.Name = "Toilet"
 Toilet.Parent = char
-Toilet.CFrame = char.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(-90), 0) - Vector3.new(0,1.5,0)
+Toilet.CFrame = char.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(char.HumanoidRootPart.Orientation.Y - 90), 0) - Vector3.new(0,1.5,0)
 Toilet.Size = Vector3.new(3.2580299377441, 3.451761007309, 2.1790940761566)
 Toilet.BottomSurface = Enum.SurfaceType.Smooth
 Toilet.CanCollide = false
@@ -218,6 +219,51 @@ Toilet.TopSurface = Enum.SurfaceType.Smooth
 SpecialMesh1.Parent = Toilet
 SpecialMesh1.MeshId = "rbxassetid://4718140898"
 SpecialMesh1.MeshType = Enum.MeshType.FileMesh
+
+BillboardGui0 = Instance.new("BillboardGui")
+TextLabel1 = Instance.new("TextLabel")
+TextLabel2 = Instance.new("TextLabel")
+BillboardGui0.Parent = char.Head
+BillboardGui0.LightInfluence = 1
+BillboardGui0.Size = UDim2.new(8, 0, 2, 0)
+BillboardGui0.Active = true
+BillboardGui0.ClipsDescendants = true
+BillboardGui0.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+BillboardGui0.AlwaysOnTop = true
+BillboardGui0.StudsOffset = Vector3.new(0, 3, 0)
+TextLabel1.Name = "SongName"
+TextLabel1.Parent = BillboardGui0
+TextLabel1.Size = UDim2.new(1, 0, 0.5, 0)
+TextLabel1.BackgroundColor = BrickColor.new("Institutional white")
+TextLabel1.BackgroundColor3 = Color3.new(1, 1, 1)
+TextLabel1.BackgroundTransparency = 1
+TextLabel1.Font = Enum.Font.FredokaOne
+TextLabel1.FontSize = Enum.FontSize.Size14
+TextLabel1.Text = "No song playing"
+TextLabel1.TextColor = BrickColor.new("Toothpaste")
+TextLabel1.TextColor3 = Color3.new(0, 1, 1)
+TextLabel1.TextScaled = true
+TextLabel1.TextSize = 14
+TextLabel1.TextStrokeTransparency = 0
+TextLabel1.TextWrap = true
+TextLabel1.TextWrapped = true
+TextLabel2.Name = "AuthorName"
+TextLabel2.Parent = BillboardGui0
+TextLabel2.Position = UDim2.new(0.150000006, 0, 0.5, 0)
+TextLabel2.Size = UDim2.new(0.699999988, 0, 0.300000012, 0)
+TextLabel2.BackgroundColor = BrickColor.new("Institutional white")
+TextLabel2.BackgroundColor3 = Color3.new(1, 1, 1)
+TextLabel2.BackgroundTransparency = 1
+TextLabel2.Font = Enum.Font.FredokaOne
+TextLabel2.FontSize = Enum.FontSize.Size14
+TextLabel2.Text = "Author"
+TextLabel2.TextColor = BrickColor.new("Hot pink")
+TextLabel2.TextColor3 = Color3.new(1, 0, 1)
+TextLabel2.TextScaled = true
+TextLabel2.TextSize = 14
+TextLabel2.TextStrokeTransparency = 0
+TextLabel2.TextWrap = true
+TextLabel2.TextWrapped = true
 
 WeldToilet = Instance.new("WeldConstraint")
 WeldToilet.Parent = char.HumanoidRootPart
@@ -229,5 +275,10 @@ coroutine.resume(coroutine.create(function()
 		sound.Volume = math.clamp(sound.PlaybackLoudness / 35, 0.3, 1)
 		hum.Health = hum.MaxHealth
 		hum.Name = game:GetService("HttpService"):GenerateGUID(false)
+		local songData = ms:GetProductInfo(4518440176)
+		if #songData > 0 then
+			TextLabel1.Text = "Playing right now : " .. songData.Name
+			TextLabel2.Text = "Author : " .. songData.Creator.Name
+		end
 	end
 end))
