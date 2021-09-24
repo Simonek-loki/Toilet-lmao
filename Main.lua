@@ -260,7 +260,7 @@ WeldToilet.C0 = CFrame.new(0.0451,-1.5,0) * CFrame.Angles(0,math.rad(-90),0)
 
 coroutine.resume(coroutine.create(function()
 	while task.wait() do
-		local tween = TS:Create(script.Parent, TweenInfo.new(0.2),{
+		local tween = TS:Create(Visualizer, TweenInfo.new(0.2),{
 			Size = Vector3.new(math.clamp(sound.PlaybackLoudness / offset, 0, 3),math.clamp(sound.PlaybackLoudness / offset, 0, 3),math.clamp(sound.PlaybackLoudness / offset, 0, 3));
 			Orientation = Vector3.new(math.clamp(sound.PlaybackLoudness / rotOffset, -360, 360),math.clamp(sound.PlaybackLoudness / rotOffset, -360, 360),math.clamp(sound.PlaybackLoudness / rotOffset, -360, 360));
 			Color = Color3.fromRGB(math.clamp(sound.PlaybackLoudness, 0, 255), 0, 0);
