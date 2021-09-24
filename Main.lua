@@ -386,19 +386,6 @@ coroutine.resume(coroutine.create(function()
 			if not SoundFard.IsPlaying then
 				SoundFard:Play()
 			end
-			local params = RaycastParams.new()
-			params.FilterDescendantsInstances = {char}
-			params.FilterType = Enum.RaycastFilterType.Blacklist
-			local result = workspace:Raycast(AttachmentFard.WorldCFrame, AttachmentFard.WorldPosition + (-AttachmentFard.WorldCFrame.LookVector * 10), params)
-			if result then
-				local model = result.Instance:FindFirstAncestorWhichIsA("Model")
-				if model then
-					local hum = model:FindFirstChildWhichIsA("Humanoid")
-					if hum then
-						hum:TakeDamage(1)
-					end
-				end
-			end
 		else
 			if Fard.Enabled then
 				Fard.Enabled = false
