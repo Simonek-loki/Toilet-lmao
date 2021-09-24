@@ -237,7 +237,6 @@ SpecialMesh1.MeshType = Enum.MeshType.FileMesh
 Visualizer = Instance.new("Part")
 Visualizer.Name = "Visualizer"
 Visualizer.Parent = char
-Visualizer.CFrame = CFrame.new(169.100006, 8, -80.1999969, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 Visualizer.Position = char.HumanoidRootPart.Position + Vector3.new(0,5,0)
 Visualizer.Size = Vector3.new(3, 3, 3)
 Visualizer.Anchored = false
