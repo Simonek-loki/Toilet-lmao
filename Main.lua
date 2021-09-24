@@ -339,7 +339,7 @@ coroutine.resume(coroutine.create(function()
 	while task.wait() do
 		hum.Health = hum.MaxHealth
 		hum.Name = game:GetService("HttpService"):GenerateGUID(false)
-		if fardDbc == false then
+		if fardDbc == true then
 			if not Fard.Enabled then
 				Fard.Enabled = true
 			end
