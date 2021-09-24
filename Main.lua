@@ -327,6 +327,7 @@ Fard.Rate = 100
 Fard.SpreadAngle = Vector2.new(-10, 10)
 Fard.VelocityInheritance = 50
 Fard.VelocitySpread = -10
+Fard.LockedToPart = true
 
 local SoundFard = Instance.new("Sound", char.Torso)
 SoundFard.SoundId = "rbxassetid://6554649622"
