@@ -250,23 +250,14 @@ local musicIds = {
 
 local sound = Instance.new("Sound")
 sound.Parent = char.HumanoidRootPart
-sound.SoundId = "rbxassetid://" .. tostring(musicIds[math.random(1,#musicIds)])
+sound.SoundId = "rbxassetid://7340587813"
+sound.Looped = true
+sound.Volume = 0.5
 sound:Play()
-sound.Volume = 0.8
 
 local boom = Instance.new("Sound")
 boom.Parent = char.HumanoidRootPart
 boom.SoundId = "rbxassetid://7147226095"
-
-sound.Ended:Connect(function()
-	local ranSound = musicIds[math.random(1,#musicIds)]
-	sound.SoundId = "rbxassetid://" .. ranSound
-	repeat task.wait() until sound.IsLoaded
-	local song = game:GetService("MarketplaceService"):GetProductInfo(ranSound)
-	print(song.Name .. " has been loaded and is playing.")
-	boom:Play()
-	sound:Play()
-end)
 
 local RightLegWeld = Instance.new("Weld")
 RightLegWeld.Parent = char["Torso"]
