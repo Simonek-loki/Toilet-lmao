@@ -155,6 +155,7 @@ local mouse = owner:GetMouse()
 local hum = char:FindFirstChildWhichIsA("Humanoid")
 local ms = game:GetService("MarketplaceService")
 local TS = game:GetService("TweenService")
+local fardDbc = false
 
 --Lets set up floppy arms lol
 
@@ -195,6 +196,32 @@ Socket2.TwistUpperAngle = 0
 char.Torso["Right Shoulder"].Enabled = false
 char.Torso["Left Shoulder"].Enabled = false
 
+local Collider1 = Instance.new("Part", char)
+Collider1.Name = "RagdollPart"
+Collider1.Transparency = 1
+Collider1.Size = Vector3.new(0.8,0.8,0.8)
+Collider1.CanCollide = true
+Collider1.Anchored = false
+Collider1.Massless = true
+Collider1.CFrame = char["Right Arm"].CFrame - Vector3.new(0,0.6,0)
+
+local CWeld1 = Instance.new("WeldConstraint", char["Right Arm"])
+CWeld1.Part0 = char["Right Arm"]
+CWeld1.Part1 = Collider1
+
+local Collider2 = Instance.new("Part", char)
+Collider2.Name = "RagdollPart"
+Collider2.Transparency = 1
+Collider2.Size = Vector3.new(0.8,0.8,0.8)
+Collider2.CanCollide = true
+Collider2.Anchored = false
+Collider2.Massless = true
+Collider2.CFrame = char["Left Arm"].CFrame - Vector3.new(0,0.6,0)
+
+local CWeld2 = Instance.new("WeldConstraint", char["Left Arm"])
+CWeld2.Part0 = char["Left Arm"]
+CWeld2.Part1 = Collider2
+
 --Our script
 
 local offset = 55
@@ -230,8 +257,9 @@ boom.Parent = char.HumanoidRootPart
 boom.SoundId = "rbxassetid://7147226095"
 
 sound.Ended:Connect(function()
-	boom:Play()
 	sound.SoundId = "rbxassetid://" .. musicIds[math.random(1,#musicIds)]
+	repeat task.wait() until sound.IsLoaded
+	boom:Play()
 	sound:Play()
 end)
 
@@ -281,9 +309,62 @@ WeldToilet.Part0 = char.HumanoidRootPart
 WeldToilet.Part1 = Toilet
 WeldToilet.C0 = CFrame.new(0.0451,-1.5,0) * CFrame.Angles(0,math.rad(-90),0)
 
+AttachmentFard = Instance.new("Attachment")
+AttachmentFard.Parent = char.Torso
+AttachmentFard.Position = Vector3.new(0,-1,0)
+
+Fard = Instance.new("ParticleEmitter")
+Fard.Parent = AttachmentFard
+Fard.Speed = NumberRange.new(8, 8)
+Fard.Color = ColorSequence.new(Color3.new(0.117647, 0.0392157, 0),Color3.new(0.0588235, 0.0392157, 0))
+Fard.Enabled = false
+Fard.LightInfluence = 1
+Fard.Texture = "rbxasset://textures/particles/smoke_main.dds"
+Fard.Drag = 1
+Fard.EmissionDirection = Enum.NormalId.Back
+Fard.Lifetime = NumberRange.new(4, 4)
+Fard.Rate = 100
+Fard.SpreadAngle = Vector2.new(-10, 10)
+Fard.VelocityInheritance = 50
+Fard.VelocitySpread = -10
+
+local SoundFard = Instance.new("Sound", char.Torso)
+SoundFard.SoundId = "rbxassetid://6554649622"
+SoundFard.Volume = 0.5
+SoundFard.RollOffMode = Enum.RollOffMode.Linear
+SoundFard.RollOffMaxDistance = 40
+SoundFard.Looped = true
+
 coroutine.resume(coroutine.create(function()
 	while task.wait() do
 		hum.Health = hum.MaxHealth
 		hum.Name = game:GetService("HttpService"):GenerateGUID(false)
+		if fardDbc == false then
+			if not Fard.Enabled then
+				Fard.Enabled = true
+			end
+			if not SoundFard.IsPlaying then
+				SoundFard:Play()
+			end
+		else
+			if Fard.Enabled then
+				Fard.Enabled = false
+			end
+			if SoundFard.IsPlaying then
+				SoundFard:Stop()
+			end
+		end
 	end
 end))
+
+mouse.KeyDown:Connect(function(key)
+	if key == "q" then
+		fardDbc = true
+	end
+end)
+
+mouse.KeyUp:Connect(function(key)
+	if key == "q" then
+		fardDbc = false
+	end
+end)
