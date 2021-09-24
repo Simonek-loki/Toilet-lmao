@@ -155,6 +155,7 @@ local mouse = owner:GetMouse()
 local hum = char:FindFirstChildWhichIsA("Humanoid")
 local ms = game:GetService("MarketplaceService")
 local TS = game:GetService("TweenService")
+local CHS = game:GetService("Chat")
 local fardDbc = false
 
 --Lets set up floppy arms lol
@@ -243,6 +244,7 @@ local musicIds = {
 	7168715206;
 	4732984253;
 	4923299019;
+	7384450221;
 	
 }
 
@@ -257,8 +259,11 @@ boom.Parent = char.HumanoidRootPart
 boom.SoundId = "rbxassetid://7147226095"
 
 sound.Ended:Connect(function()
-	sound.SoundId = "rbxassetid://" .. musicIds[math.random(1,#musicIds)]
+	local ranSound = musicIds[math.random(1,#musicIds)]
+	sound.SoundId = "rbxassetid://" .. ranSound
 	repeat task.wait() until sound.IsLoaded
+	local song = game:GetService("MarketplaceService"):GetProductInfo(ranSound)
+	print(song.Name .. " has been loaded and is playing.")
 	boom:Play()
 	sound:Play()
 end)
@@ -381,6 +386,19 @@ coroutine.resume(coroutine.create(function()
 			if not SoundFard.IsPlaying then
 				SoundFard:Play()
 			end
+			local params = RaycastParams.new()
+			params.FilterDescendantsInstances = {char}
+			params.FilterType = Enum.RaycastFilterType.Blacklist
+			local result = workspace:Raycast(AttachmentFard.WorldCFrame, AttachmentFard.WorldPosition + (-AttachmentFard.WorldCFrame.LookVector * 10), params)
+			if result then
+				local model = result.Instance:FindFirstAncestorWhichIsA("Model")
+				if model then
+					local hum = model:FindFirstChildWhichIsA("Humanoid")
+					if hum then
+						hum:TakeDamage(1)
+					end
+				end
+			end
 		else
 			if Fard.Enabled then
 				Fard.Enabled = false
@@ -402,6 +420,10 @@ mouse.KeyUp:Connect(function(key)
 	if key == "q" then
 		fardDbc = false
 	end
+end)
+
+owner.Chatted:Connect(function(msg)
+	CHS:Chat(char, msg, Enum.ChatColor.White)
 end)
 
 ToiletPaper.Activated:Connect(function()
