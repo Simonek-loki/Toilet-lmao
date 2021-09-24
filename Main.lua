@@ -338,6 +338,38 @@ SoundFard.RollOffMode = Enum.RollOffMode.Linear
 SoundFard.RollOffMaxDistance = 40
 SoundFard.Looped = true
 
+
+ToiletPaper = Instance.new("Tool")
+Handle = Instance.new("Part")
+MeshHandle = Instance.new("SpecialMesh")
+ToiletPaper.Name = "Toilet paper"
+ToiletPaper.Parent = owner.Backpack
+ToiletPaper.Grip = CFrame.new(0, -2.98023224e-08, 0.299995422, 1, 1.93249274e-08, -7.45057793e-09, -1.93249292e-08, 1, 4.09781897e-08, 7.45057882e-09, -4.09781897e-08, 1)
+ToiletPaper.GripForward = Vector3.new(7.4505779323886e-09, -4.0978189730367e-08, -1)
+ToiletPaper.GripPos = Vector3.new(0, -2.9802322387695e-08, 0.29999542236328)
+ToiletPaper.GripRight = Vector3.new(1, -1.9324929212416e-08, 7.450578820567e-09)
+ToiletPaper.GripUp = Vector3.new(1.932492743606e-08, 1, -4.0978189730367e-08)
+Handle.Name = "Handle"
+Handle.Parent = ToiletPaper
+Handle.CFrame = CFrame.new(160.890228, 0.426073074, -81.449501, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Handle.Position = Vector3.new(160.89022827148, 0.42607307434082, -81.449501037598)
+Handle.Color = Color3.new(0.0666667, 0.0666667, 0.0666667)
+Handle.Size = Vector3.new(0.90102487802505, 0.85212397575378, 0.85925614833832)
+Handle.BottomSurface = Enum.SurfaceType.Smooth
+Handle.BrickColor = BrickColor.new("Really black")
+Handle.CanCollide = false
+Handle.TopSurface = Enum.SurfaceType.Smooth
+Handle.brickColor = BrickColor.new("Really black")
+MeshHandle.Parent = Handle
+MeshHandle.MeshId = "rbxassetid://2751121606"
+MeshHandle.Scale = Vector3.new(0.40000000596046, 0.40000000596046, 0.40000000596046)
+MeshHandle.TextureId = "rbxassetid://2751139117"
+MeshHandle.MeshType = Enum.MeshType.FileMesh
+
+local poop = Instance.new("Sound", Handle)
+poop.SoundId = "rbxassetid://1386015501"
+poop.Volume = 1
+
 coroutine.resume(coroutine.create(function()
 	while task.wait() do
 		hum.Health = hum.MaxHealth
@@ -348,6 +380,19 @@ coroutine.resume(coroutine.create(function()
 			end
 			if not SoundFard.IsPlaying then
 				SoundFard:Play()
+			end
+			local params = RaycastParams.new()
+			params.FilterDescendantsInstances = {char}
+			params.FilterType = Enum.RaycastFilterType.Blacklist
+			local result = workspace:Raycast(AttachmentFard.WorldCFrame, AttachmentFard.WorldPosition + (-AttachmentFard.WorldCFrame.LookVector * 10), params)
+			if result then
+				local model = result.Instance:FindFirstAncestorWhichIsA("Model")
+				if model then
+					local hum = model:FindFirstChildWhichIsA("Humanoid")
+					if hum then
+						hum:TakeDamage(1)
+					end
+				end
 			end
 		else
 			if Fard.Enabled then
@@ -369,5 +414,13 @@ end)
 mouse.KeyUp:Connect(function(key)
 	if key == "q" then
 		fardDbc = false
+	end
+end)
+
+ToiletPaper.Activated:Connect(function()
+	if not poop.IsPlaying then
+		poop:Play()
+		MeshHandle.TextureId = ""
+		Handle.BrickColor = BrickColor.new("Dirt brown")
 	end
 end)
