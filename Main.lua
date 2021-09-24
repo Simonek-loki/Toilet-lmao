@@ -156,6 +156,47 @@ local hum = char:FindFirstChildWhichIsA("Humanoid")
 local ms = game:GetService("MarketplaceService")
 local TS = game:GetService("TweenService")
 
+--Lets set up floppy arms lol
+
+local RAA1 = Instance.new("Attachment")
+RAA1.Parent = char.Torso
+RAA1.CFrame = char.Torso["Right Shoulder"].C0
+
+local RAA2 = Instance.new("Attachment")
+RAA2.Parent = char["Right Arm"]
+RAA2.CFrame = char.Torso["Right Shoulder"].C1
+
+local LAA1 = Instance.new("Attachment")
+LAA1.Parent = char.Torso
+LAA1.CFrame = char.Torso["Left Shoulder"].C0
+
+local LAA2 = Instance.new("Attachment")
+LAA2.Parent = char["Left Arm"]
+LAA2.CFrame = char.Torso["Left Shoulder"].C1
+
+local Socket1 = Instance.new("BallSocketConstraint")
+Socket1.Parent = char.Torso
+Socket1.Attachment0 = RAA1
+Socket1.Attachment1 = RAA2
+Socket1.LimitsEnabled = true
+Socket1.TwistLimitsEnabled = true
+Socket1.TwistLowerAngle = -180
+Socket1.TwistUpperAngle = 0
+
+local Socket2 = Instance.new("BallSocketConstraint")
+Socket2.Parent = char.Torso
+Socket2.Attachment0 = LAA1
+Socket2.Attachment1 = LAA2
+Socket2.LimitsEnabled = true
+Socket2.TwistLimitsEnabled = true
+Socket2.TwistLowerAngle = -180
+Socket2.TwistUpperAngle = 0
+
+char.Torso["Right Shoulder"].Enabled = false
+char.Torso["Left Shoulder"].Enabled = false
+
+--Our script
+
 local offset = 55
 local rotOffset = 5
 local colorOffset = 5
