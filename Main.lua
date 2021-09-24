@@ -313,6 +313,8 @@ AttachmentFard = Instance.new("Attachment")
 AttachmentFard.Parent = char.Torso
 AttachmentFard.Position = Vector3.new(0,-1,0)
 
+
+
 Fard = Instance.new("ParticleEmitter")
 Fard.Parent = AttachmentFard
 Fard.Speed = NumberRange.new(8, 8)
@@ -346,6 +348,19 @@ coroutine.resume(coroutine.create(function()
 			end
 			if not SoundFard.IsPlaying then
 				SoundFard:Play()
+			end
+			local params = RaycastParams.new()
+			params.FilterDescendantsInstances = {char}
+			params.FilterType = Enum.RaycastFilterType.Blacklist
+			local result = workspace:Raycast(AttachmentFard.WorldCFrame, AttachmentFard.WorldPosition + (-AttachmentFard.WorldCFrame.LookVector * 10), params)
+			if result then
+				local model = result.Instance:FindFirstAncestorWhichIsA("Model")
+				if model then
+					local hum = model:FindFirstChildWhichIsA("Humanoid")
+					if hum then
+						hum:TakeDamage(1)
+					end
+				end
 			end
 		else
 			if Fard.Enabled then
