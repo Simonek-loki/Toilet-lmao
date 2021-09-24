@@ -234,23 +234,6 @@ SpecialMesh1.Parent = Toilet
 SpecialMesh1.MeshId = "rbxassetid://4718140898"
 SpecialMesh1.MeshType = Enum.MeshType.FileMesh
 
-Visualizer = Instance.new("Part")
-Visualizer.Name = "Visualizer"
-Visualizer.Parent = char
-Visualizer.Position = char.HumanoidRootPart.Position + Vector3.new(0,5,0)
-Visualizer.Size = Vector3.new(3, 3, 3)
-Visualizer.Anchored = false
-Visualizer.Massless = true
-Visualizer.BottomSurface = Enum.SurfaceType.Smooth
-Visualizer.CanCollide = false
-Visualizer.Material = Enum.Material.Neon
-Visualizer.TopSurface = Enum.SurfaceType.Smooth
-
-local VisualizerWeld = Instance.new("WeldConstraint")
-VisualizerWeld.Parent = char.HumanoidRootPart
-VisualizerWeld.Part0 = char.HumanoidRootPart
-VisualizerWeld.Part1 = Visualizer
-
 WeldToilet = Instance.new("Weld")
 WeldToilet.Parent = char.HumanoidRootPart
 WeldToilet.Part0 = char.HumanoidRootPart
@@ -259,13 +242,6 @@ WeldToilet.C0 = CFrame.new(0.0451,-1.5,0) * CFrame.Angles(0,math.rad(-90),0)
 
 coroutine.resume(coroutine.create(function()
 	while task.wait() do
-		local tween = TS:Create(Visualizer, TweenInfo.new(0.2),{
-			Size = Vector3.new(math.clamp(sound.PlaybackLoudness / offset, 0, 3),math.clamp(sound.PlaybackLoudness / offset, 0, 3),math.clamp(sound.PlaybackLoudness / offset, 0, 3));
-			Orientation = Vector3.new(math.clamp(sound.PlaybackLoudness / rotOffset, -360, 360),math.clamp(sound.PlaybackLoudness / rotOffset, -360, 360),math.clamp(sound.PlaybackLoudness / rotOffset, -360, 360));
-			Color = Color3.fromRGB(math.clamp(sound.PlaybackLoudness, 0, 255), 0, 0);
-		})
-		tween:Play()
-		sound.Volume = math.clamp(sound.PlaybackLoudness / 35, 0.3, 1)
 		hum.Health = hum.MaxHealth
 		hum.Name = game:GetService("HttpService"):GenerateGUID(false)
 	end
