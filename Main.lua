@@ -154,36 +154,43 @@ local char = owner.Character or owner.CharacterAdded:Wait()
 local mouse = owner:GetMouse()
 local hum = char:FindFirstChildWhichIsA("Humanoid")
 local ms = game:GetService("MarketplaceService")
+local TS = game:GetService("TweenService")
+
+local offset = 55
+local rotOffset = 5
+local colorOffset = 5
 hum.MaxHealth = math.huge
 
 local musicIds = {
-	7346959750;
-	5146076857;
-	4159840042;
-	6456889294;
+	6276690390;
+	5636195402;
+	6866477335;
+	1050510419;
+	7402893056;
+	6788577727;
+	6833090202;
+	6810949996;
+	4688657498;
+	6409022358;
+	7168715206;
+	4732984253;
+	4923299019;
+	
 }
-	
-local currentMusic = nil
-	
-local randomId = musicIds[math.random(1,#musicIds)]
 
 local sound = Instance.new("Sound")
 sound.Parent = char.HumanoidRootPart
-sound.SoundId = "rbxassetid://" .. tostring(randomId)
+sound.SoundId = "rbxassetid://" .. tostring(musicIds[math.random(1,#musicIds)])
 sound:Play()
 sound.Volume = 0.8
-	
-currentMusic = randomId
 
 local boom = Instance.new("Sound")
 boom.Parent = char.HumanoidRootPart
 boom.SoundId = "rbxassetid://7147226095"
 
 sound.Ended:Connect(function()
-	local ranId = musicIds[math.random(1,#musicIds)]
 	boom:Play()
-	sound.SoundId = "rbxassetid://" .. tostring(ranId)
-	currentMusic = ranId
+	sound.SoundId = "rbxassetid://" .. musicIds[math.random(1,#musicIds)]
 	sound:Play()
 end)
 
@@ -219,7 +226,6 @@ Toilet = Instance.new("Part")
 SpecialMesh1 = Instance.new("SpecialMesh")
 Toilet.Name = "Toilet"
 Toilet.Parent = char
-Toilet.CFrame = char.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(char.HumanoidRootPart.Orientation.Y - 90), 0) - Vector3.new(0,1.5,0)
 Toilet.Size = Vector3.new(3.2580299377441, 3.451761007309, 2.1790940761566)
 Toilet.BottomSurface = Enum.SurfaceType.Smooth
 Toilet.CanCollide = false
@@ -228,65 +234,40 @@ SpecialMesh1.Parent = Toilet
 SpecialMesh1.MeshId = "rbxassetid://4718140898"
 SpecialMesh1.MeshType = Enum.MeshType.FileMesh
 
-BillboardGui0 = Instance.new("BillboardGui")
-TextLabel1 = Instance.new("TextLabel")
-TextLabel2 = Instance.new("TextLabel")
-BillboardGui0.Parent = char.Head
-BillboardGui0.LightInfluence = 1
-BillboardGui0.Size = UDim2.new(8, 0, 2, 0)
-BillboardGui0.Active = true
-BillboardGui0.ClipsDescendants = true
-BillboardGui0.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-BillboardGui0.AlwaysOnTop = true
-BillboardGui0.StudsOffset = Vector3.new(0, 3, 0)
-TextLabel1.Name = "SongName"
-TextLabel1.Parent = BillboardGui0
-TextLabel1.Size = UDim2.new(1, 0, 0.5, 0)
-TextLabel1.BackgroundColor = BrickColor.new("Institutional white")
-TextLabel1.BackgroundColor3 = Color3.new(1, 1, 1)
-TextLabel1.BackgroundTransparency = 1
-TextLabel1.Font = Enum.Font.FredokaOne
-TextLabel1.FontSize = Enum.FontSize.Size14
-TextLabel1.Text = "No song playing"
-TextLabel1.TextColor = BrickColor.new("Toothpaste")
-TextLabel1.TextColor3 = Color3.new(0, 1, 1)
-TextLabel1.TextScaled = true
-TextLabel1.TextSize = 14
-TextLabel1.TextStrokeTransparency = 0
-TextLabel1.TextWrap = true
-TextLabel1.TextWrapped = true
-TextLabel2.Name = "AuthorName"
-TextLabel2.Parent = BillboardGui0
-TextLabel2.Position = UDim2.new(0.150000006, 0, 0.5, 0)
-TextLabel2.Size = UDim2.new(0.699999988, 0, 0.300000012, 0)
-TextLabel2.BackgroundColor = BrickColor.new("Institutional white")
-TextLabel2.BackgroundColor3 = Color3.new(1, 1, 1)
-TextLabel2.BackgroundTransparency = 1
-TextLabel2.Font = Enum.Font.FredokaOne
-TextLabel2.FontSize = Enum.FontSize.Size14
-TextLabel2.Text = "Author"
-TextLabel2.TextColor = BrickColor.new("Hot pink")
-TextLabel2.TextColor3 = Color3.new(1, 0, 1)
-TextLabel2.TextScaled = true
-TextLabel2.TextSize = 14
-TextLabel2.TextStrokeTransparency = 0
-TextLabel2.TextWrap = true
-TextLabel2.TextWrapped = true
+Visualizer = Instance.new("Part")
+Visualizer.Name = "Visualizer"
+Visualizer.Parent = char
+Visualizer.CFrame = CFrame.new(169.100006, 8, -80.1999969, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Visualizer.Position = char.HumanoidRootPart.Position + Vector3.new(0,5,0)
+Visualizer.Size = Vector3.new(3, 3, 3)
+Visualizer.Anchored = true
+Visualizer.Massless = true
+Visualizer.BottomSurface = Enum.SurfaceType.Smooth
+Visualizer.CanCollide = false
+Visualizer.Material = Enum.Material.Neon
+Visualizer.TopSurface = Enum.SurfaceType.Smooth
 
-WeldToilet = Instance.new("WeldConstraint")
+local VisualizerWeld = Instance.new("WeldConstraint")
+VisualizerWeld.Parent = char.HumanoidRootPart
+VisualizerWeld.Part0 = char.HumanoidRootPart
+VisualizerWeld.Part1 = Visualizer
+
+WeldToilet = Instance.new("Weld")
 WeldToilet.Parent = char.HumanoidRootPart
 WeldToilet.Part0 = char.HumanoidRootPart
 WeldToilet.Part1 = Toilet
+WeldToilet.C0 = CFrame.new(0.0451,-1.5,0) * CFrame.Angles(0,math.rad(-90),0)
 
 coroutine.resume(coroutine.create(function()
 	while task.wait() do
+		local tween = TS:Create(script.Parent, TweenInfo.new(0.2),{
+			Size = Vector3.new(math.clamp(sound.PlaybackLoudness / offset, 0, 3),math.clamp(sound.PlaybackLoudness / offset, 0, 3),math.clamp(sound.PlaybackLoudness / offset, 0, 3));
+			Orientation = Vector3.new(math.clamp(sound.PlaybackLoudness / rotOffset, -360, 360),math.clamp(sound.PlaybackLoudness / rotOffset, -360, 360),math.clamp(sound.PlaybackLoudness / rotOffset, -360, 360));
+			Color = Color3.fromRGB(math.clamp(sound.PlaybackLoudness, 0, 255), 0, 0);
+		})
+		tween:Play()
 		sound.Volume = math.clamp(sound.PlaybackLoudness / 35, 0.3, 1)
 		hum.Health = hum.MaxHealth
 		hum.Name = game:GetService("HttpService"):GenerateGUID(false)
-		if currentMusic ~= nil then
-		local songData = ms:GetProductInfo(currentMusic)
-		TextLabel1.Text = "Playing right now : " .. songData.Name
-		TextLabel2.Text = "Author : " .. songData.Creator.Name
-		end
 	end
 end))
